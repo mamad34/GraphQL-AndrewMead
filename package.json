@@ -1,0 +1,24 @@
+{
+  "name": "graphql-andrewmead",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "babel-node ./graphql-basics/src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mamad34/GraphQL-AndrewMead.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mamad34/GraphQL-AndrewMead/issues"
+  },
+  "homepage": "https://github.com/mamad34/GraphQL-AndrewMead#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
