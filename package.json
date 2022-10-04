@@ -1,10 +1,10 @@
 {
   "name": "graphql-andrewmead",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "nodemon E:/graphQl-andrew-mead/GraphQL-AndrewMead/graphql-basics/src --exec babel-node",
+    "start": "nodemon -e js,graphql ./src/index.js ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,10 +19,20 @@
   "homepage": "https://github.com/mamad34/GraphQL-AndrewMead#readme",
   "dependencies": {
     "@graphql-yoga/node": "^2.13.13",
-    "babel-cli": "^6.26.0",
-    "npm ": "^1.7.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "graphql": "^16.6.0",
+    "graphql-import": "^1.0.2",
+    "graphql-import-files": "^1.1.18",
+    "graphql-import-node": "^0.0.5",
     "graphql-yoga": "^2.13.13",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "npm ": "^1.7.0",
+    "uuid": "^9.0.0"
+  },
+  "description": "",
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3"
   }
 }
