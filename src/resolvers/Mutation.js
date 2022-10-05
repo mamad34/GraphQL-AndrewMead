@@ -66,7 +66,7 @@ const Mutation = {
     }
     return user;
   },
-  deletePost(parant, args, { db }, info) {
+  deletePost(parant, args, { db, pubSub }, info) {
     const postIndex = db.myPosts.findIndex((post) => post.id === args.id);
 
     if (postIndex === -1) {
@@ -74,10 +74,19 @@ const Mutation = {
     }
     db.myComments = db.myComments.filter((comment) => comment.post !== args.id);
 
-    const deletedPost = db.myPosts.splice(postIndex, 1);
+    // const deletedPost = db.myPosts.splice(postIndex, 1);
+    const [post] = db.myPosts.splice(postIndex, 1);
+    if (post.published) {
+      pubSub.publish("post", {
+        post: {
+          mutation: "DELETED",
+          data: post,
+        },
+      });
+    }
     return deletedPost[0];
   },
-  createPost(parent, args, { db }, info) {
+  createPost(parent, args, { db, pubSub }, info) {
     const userExist = db.myUsers.some((user) => {
       return user.id === args.data.author;
     });
@@ -93,10 +102,18 @@ const Mutation = {
       // author: args.author,
     };
     db.myPosts.push(post);
+    if (args.data.published === true) {
+      pubSub.publish("post", {
+        post: {
+          mutation: "CREATED",
+          data: post,
+        },
+      });
+    }
     return post;
   },
 
-  createComment(parent, args, { db }, info) {
+  createComment(parent, args, { db, pubSub }, info) {
     const userExist = db.myUsers.some((user) => {
       return user.id === args.data.author;
     });
@@ -118,6 +135,7 @@ const Mutation = {
         // post: args.post,
       };
       db.myComments.push(comment);
+      pubSub.publish(`comment ${args.data.post}`, { comment });
       return comment;
     }
   },

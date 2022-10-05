@@ -6,7 +6,8 @@
 // console.log(getGreeting("kir"));
 // console.log(subtract(1, 1), myadd(1, 1));
 
-import { createServer } from "@graphql-yoga/node";
+import { createServer, createPubSub } from "@graphql-yoga/node";
+import { PubSub } from "graphql-subscriptions";
 import { loadFile } from "graphql-import-files";
 import db from "./db.js";
 // import db from "./db";
@@ -15,8 +16,10 @@ import Mutation from "./resolvers/Mutation.js";
 import Post from "./resolvers/Post.js";
 import Comment from "./resolvers/Comment.js";
 import User from "./resolvers/User.js";
-
+import Subscription from "./resolvers/Subscription.js";
 console.log(db);
+
+const pubSub = new PubSub();
 
 const typeDefs = loadFile("./src/schema.graphql");
 const server = createServer({
@@ -25,6 +28,7 @@ const server = createServer({
     resolvers: {
       Query,
       Mutation,
+      Subscription,
       User,
       Post,
       Comment,
@@ -32,9 +36,9 @@ const server = createServer({
   },
   context: () => {
     console.log("first", db);
-
     return {
       db,
+      pubSub,
     };
   },
 });
