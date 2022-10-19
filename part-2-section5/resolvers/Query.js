@@ -5,8 +5,8 @@ exports.Query = {
   numberOfAnimals: () => 5,
   price: () => 3.32,
   hello: () => ["kir", "Kos"],
-  products: (parent, { filter }, { categories, products }, info) => {
-    let filteredProducts = products;
+  products: (parent, { filter }, { db }, info) => {
+    let filteredProducts = db.products;
     if (filter && filter.onSale === true) {
       filteredProducts = filteredProducts.filter((product) => {
         return product.onSale;
@@ -28,14 +28,14 @@ exports.Query = {
       }
       return filteredProducts;
     }
-    return products;
+    return db.products;
   },
-  product: (parent, args, { categories, products }, info) => {
-    const dick = products.find((product) => product.id === args.id);
+  product: (parent, args, { db }, info) => {
+    const dick = db.products.find((product) => product.id === args.id);
     return dick;
   },
-  categories: () => categories,
+  categories: (parent, args, { db }, info) => db.categories,
   categorie: (parent, args, ctx, info) => {
-    return categories.find((cat) => cat.id === args.id);
+    return db.categories.find((cat) => cat.id === args.id);
   },
 };

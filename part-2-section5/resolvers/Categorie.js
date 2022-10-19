@@ -1,6 +1,6 @@
 exports.Categorie = {
-  products: (parent, { filter }, { categories, products }, info) => {
-    const categoryProducts = products.filter(
+  products: (parent, { filter }, { db }, info) => {
+    const categoryProducts = db.products.filter(
       (product) => product.categoryId === parent.id
     );
     let filteredCategoryProducts = categoryProducts;
@@ -8,7 +8,8 @@ exports.Categorie = {
       filteredCategoryProducts = filteredCategoryProducts.filter((product) => {
         return product.onSale;
       });
-      return filteredCategoryProducts;
+      console.log("Dick");
     }
+    return filteredCategoryProducts;
   },
 };
