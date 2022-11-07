@@ -8,7 +8,8 @@ type Mutation{
     postCreate(post:PostInput!):PostPayload!
     postUpdate(postId:ID!,post:PostInput!):PostPayload
     postDelete(postId:ID!):PostPayload!
-    signup(email:String!,name:String!,password:String!,bio:String!):User!
+    signup(credentials:CredentalsInput!,name:String!,bio:String!):AuthPayload!
+    signin(credentials:CredentalsInput!):AuthPayload!
 }
 
 type Post {
@@ -42,9 +43,19 @@ type PostPayload{
     post:Post
 }
 
+type AuthPayload{
+    userErrors:[userError!]!
+    token:String!
+}
+
 input PostInput {
     title:String
     content:String
+}
+
+input CredentalsInput{
+    email:String!
+    password:String!
 }
 
 `
