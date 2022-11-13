@@ -18,7 +18,17 @@ interface PostCreateArgs{
      // array of objects
  }
 export const postResolvers ={
-    postCreate:async(parent:any, {post}:PostCreateArgs,{prisma}:Context):Promise<PostPayloadType>=>{
+    postCreate:async(parent:any, {post}:PostCreateArgs,{prisma ,userInfo}:Context):Promise<PostPayloadType>=>{
+        
+        if(!userInfo){
+            return {
+                userErrors:[{
+                    message:"not authenticated"
+                }],
+                post:null
+            }
+        }
+
         const {title,content} =post
         if(!title || !content){
             return{
@@ -35,7 +45,7 @@ export const postResolvers ={
                 data:{
                     title,
                     content,
-                    authorId:1
+                    authorId:userInfo.userId
                 }
             })
         }
